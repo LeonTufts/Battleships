@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Board {
@@ -39,9 +38,36 @@ public class Board {
 
     public void addShipVertical(int x, int y, Ship s){
         for(int i = 0; i < s.getLength(); i++) {
-            board[y-1+i][x-1] = 1;
+            board[y - 1 + i][x - 1] = 1;
         }
     }
+
+    public int boatCheckerVertical(int x, int y, Ship s) {
+        for (int i = 0; i < s.getLength(); i++) {
+            if (board[y - 1 + i][x - 1] == 1) {
+                System.out.println("Your boats cannot touch");
+                break;
+            } else {
+                System.out.println("Good boat placement");
+                return 1;
+            }
+        }
+        return -1;
+    }
+
+    public int boatCheckerHorizontal(int x, int y, Ship s) {
+        for (int i = 0; i < s.getLength(); i++) {
+            if (board[y-1][x-1+i] == 1) {
+                System.out.println("Your boats cannot touch");
+                return 0;
+            } else {
+                System.out.println("Good boat placement");
+                return 1;
+            }
+        }
+        return -1;
+    }
+
 
     public void addShipHorizontal(int x, int y, Ship s){
         for(int i = 0; i < s.getLength(); i++) {

@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -40,6 +39,8 @@ public class Main {
         System.out.println("Player 2, please place your ships.");
 
         board2 = PlaceShips(board2);
+
+
     }
 
 public static Board PlaceShips(Board board) {
@@ -81,7 +82,6 @@ public static Board PlaceShips(Board board) {
 
             while (y < 1 || y > (10 - board.shipsToPlace.get(shipToPlace - 1).getLength())) {
                 System.out.println("Please enter a valid y coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
-                System.out.println(board.shipsToPlace.get(shipToPlace - 1).getLength());
                 y = sc.nextInt();
             }
 
@@ -93,7 +93,32 @@ public static Board PlaceShips(Board board) {
                 x = sc.nextInt();
             }
 
+            int boatChecker = board.boatCheckerVertical(x, y, board.shipsToPlace.get(shipToPlace - 1));
+
+            while(boatChecker == 0){
+                System.out.println("Please enter a different y coordinate. ");
+                y = sc.nextInt();
+
+                while (y < 1 || y > (10 - board.shipsToPlace.get(shipToPlace - 1).getLength())) {
+                    System.out.println("Please enter a valid y coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                    y = sc.nextInt();
+                }
+
+                System.out.println("Please enter a different x coordinate. ");
+                x = sc.nextInt();
+
+                while (x < 1 || x > 10) {
+                    System.out.println("Please enter a valid x coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                    x = sc.nextInt();
+                }
+
+                boatChecker = board.boatCheckerVertical(x, y, board.shipsToPlace.get(shipToPlace - 1));
+
+            }
+
             board.addShipVertical(x, y, board.shipsToPlace.get(shipToPlace - 1));
+
+
         } else {
             System.out.println("Please enter the left most x coordinate for this ship. ");
             int x = sc.nextInt();
@@ -111,7 +136,32 @@ public static Board PlaceShips(Board board) {
                 y = sc.nextInt();
             }
 
+            int boatChecker = board.boatCheckerHorizontal(x, y, board.shipsToPlace.get(shipToPlace - 1));
+
+            while(boatChecker == 0){
+
+                System.out.println("Please enter a different x coordinate. ");
+                x = sc.nextInt();
+
+                while (x < 1 || x > (10 - board.shipsToPlace.get(shipToPlace - 1).getLength())) {
+                    System.out.println("Please enter a valid x coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                    y = sc.nextInt();
+                }
+
+                System.out.println("Please enter a different y coordinate. ");
+                y = sc.nextInt();
+
+                while (y < 1 || y > 10) {
+                    System.out.println("Please enter a valid y coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                    y = sc.nextInt();
+                }
+
+                boatChecker = board.boatCheckerVertical(x, y, board.shipsToPlace.get(shipToPlace - 1));
+
+            }
+
             board.addShipHorizontal(x, y, board.shipsToPlace.get(shipToPlace - 1));
+
         }
 
         for (int j = 0; j < board.length(); j++) {
