@@ -40,6 +40,17 @@ public class Main {
 
         board2 = PlaceShips(board2);
 
+        Board board3 = new Board();
+        Board board4 = new Board();
+
+//        while(!isGameOver(board1) || !isGameOver(board2)){
+//
+//            System.out.println("Player 1, take your shot. Enter your x and then y coordinates. ");
+//
+//            int x = sc.nextInt();
+//            int y = sc.nextInt();
+//
+//        }
 
     }
 
@@ -49,7 +60,7 @@ public static Board PlaceShips(Board board) {
 
         System.out.println("You have " + board.shipsToPlace.toString() + " left to place.");
 
-        System.out.println("Which ship do you wish to place first? (1, 2, 3, 4, 5) ");
+        System.out.println("Which ship do you wish to place first? (enter place of ship in list) ");
         int shipToPlace = sc.nextInt();
         boolean validAnswer = shipToPlace == 1 || shipToPlace == 2 || shipToPlace == 3 || shipToPlace == 4 || shipToPlace == 5;
         while (!validAnswer) {
@@ -58,12 +69,7 @@ public static Board PlaceShips(Board board) {
             validAnswer = shipToPlace == 1 || shipToPlace == 2 || shipToPlace == 3 || shipToPlace == 4 || shipToPlace == 5;
         }
 
-        for (int j = 0; j < board.length(); j++) {
-            for (int k = 0; k < board.length(); k++) {
-                System.out.print(board.grid()[j][k] + "\t");
-            }
-            System.out.println();
-        }
+        PrintBoard(board);
 
         System.out.println("Do you want to place your " + board.shipsToPlace.get(shipToPlace - 1) + " [v]ertically or [h]orizontally? ");
         String orientation = sc.next();
@@ -164,16 +170,34 @@ public static Board PlaceShips(Board board) {
 
         }
 
+        PrintBoard(board);
+
+        board.removeShip(board.shipsToPlace.get(shipToPlace - 1));
+    }
+
+    return board;
+    }
+
+    public static void PrintBoard(Board board){
+
         for (int j = 0; j < board.length(); j++) {
             for (int k = 0; k < board.length(); k++) {
                 System.out.print(board.grid()[j][k] + "\t");
             }
             System.out.println();
         }
-        board.removeShip(board.shipsToPlace.get(shipToPlace - 1));
     }
 
-    return board;
+    public static boolean isGameOver(Board board){
+        int check = 1;
+        for(int i = 0; i < board.length(); i++){
+            for(int j = 0; j < board.length(); i++){
+                if(board.grid()[i][j] < check){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }

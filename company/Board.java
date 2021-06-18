@@ -80,6 +80,10 @@ public class Board {
         shipsToPlace.remove(s);
     }
 
+    public void FireAway(int x, int y){
+        board[y-1][x-1] = board[y-1][x-1] - 1;
+    }
+
 
 
 
