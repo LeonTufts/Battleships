@@ -84,6 +84,16 @@ public class Board {
         board[y-1][x-1] = board[y-1][x-1] - 1;
     }
 
+    public int isHit(int x, int y, Board boardx){
+        if(board[y-1][x-1] == 1){
+            boardx.grid()[y-1][x-1] = 1;
+            return 1;
+        }
+        boardx.grid()[y-1][x-1] = -1;
+        return 0;
+
+    }
+
 
 
 

@@ -43,14 +43,54 @@ public class Main {
         Board board3 = new Board();
         Board board4 = new Board();
 
-//        while(!isGameOver(board1) || !isGameOver(board2)){
-//
-//            System.out.println("Player 1, take your shot. Enter your x and then y coordinates. ");
-//
-//            int x = sc.nextInt();
-//            int y = sc.nextInt();
-//
-//        }
+        while(!isGameOver(board1) || !isGameOver(board2)){
+
+            System.out.println("Player 1, take your shot. Enter your x and then y coordinates. ");
+
+            int hitCounter1 = 0;
+            int hitCounter2 = 0;
+
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+
+            board2.FireAway(x, y);
+            if(board2.isHit(x, y, board3) == 1){
+                System.out.println("HIT!! Great shot. ");
+                hitCounter1 = hitCounter1 + 1;
+            }
+
+            System.out.println("Would you like to see your previous shots? ");
+            String yesNo = yesNoVerifier();
+            if(yesNo.equals("YES")){
+                PrintBoard(board3);
+            }
+
+            System.out.println("Here are your current ships. ");
+            PrintBoard(board1);
+
+            System.out.println("Player 2, take your shot. Enter your x and then y coordinates. ");
+
+            x = sc.nextInt();
+            y = sc.nextInt();
+
+            board1.FireAway(x, y);
+            if(board1.isHit(x, y, board4) == 1){
+                System.out.println("HIT!! Great shot. ");
+                hitCounter2 = hitCounter2 + 1;
+            }
+
+            System.out.println("MISS!! Better luck next time. ");
+
+            System.out.println("Would you like to see your previous shots? ");
+            yesNo = yesNoVerifier();
+            if(yesNo.equals("YES")){
+                PrintBoard(board4);
+            }
+
+            System.out.println("Here are your current ships. ");
+            PrintBoard(board2);
+
+        }
 
     }
 
@@ -198,6 +238,23 @@ public static Board PlaceShips(Board board) {
             }
         }
         return true;
+    }
+
+    public static String yesNoVerifier()
+    {
+        String yesNo = sc.next();
+
+        yesNo = yesNo.toUpperCase();
+        boolean validAnswer = yesNo.equals("YES") || yesNo.equals("NO");
+
+        while (!validAnswer) {
+            System.out.println("Please enter either Yes or No.");
+            yesNo = sc.next();
+            yesNo = yesNo.toUpperCase();
+            validAnswer = yesNo.equals("YES") || yesNo.equals("NO");
+        }
+
+        return yesNo;
     }
 
 }
