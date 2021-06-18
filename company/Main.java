@@ -35,55 +35,95 @@ public class Main {
 
         System.out.println("Player 1, please place your ships.");
 
-            System.out.println("You have " + board1.shipsToPlace.toString() + " left to place.");
-            System.out.println("Which ship do you wish to place first? ");
-            String shipToPlace = sc.next();
-            shipToPlace = shipToPlace.toUpperCase();
-            boolean validAnswer = shipToPlace.equals("CARRIER") || shipToPlace.equals("BATTLESHIP") || shipToPlace.equals("CRUISER") || shipToPlace.equals("SUBMARINE") || shipToPlace.equals("DESTROYER");
-            while(!validAnswer){
-                System.out.println("Please enter any of " + board1.shipsToPlace.toString());
-                shipToPlace = sc.next();
-                shipToPlace = shipToPlace.toUpperCase();
-                validAnswer = shipToPlace.equals("CARRIER") || shipToPlace.equals("BATTLESHIP") || shipToPlace.equals("CRUISER") || shipToPlace.equals("SUBMARINE") || shipToPlace.equals("DESTROYER");
-            }
+        board1 = PlaceShips(board1);
 
-            for (int i = 0; i < board1.length(); i++){
-                for (int j = 0; j < board1.length(); j++){
-                    System.out.print(board1.grid()[i][j] + "\t");
-                }
-                System.out.println();
-            }
+        System.out.println("Player 2, please place your ships.");
 
-            System.out.println("Do you want to place this ship [v]ertically or [h]orizontally? ");
-            String orientation = sc.next();
+        board2 = PlaceShips(board2);
+    }
+
+public static Board PlaceShips(Board board) {
+
+    for (int i = 0; i <= 4; i++) {
+
+        System.out.println("You have " + board.shipsToPlace.toString() + " left to place.");
+
+        System.out.println("Which ship do you wish to place first? (1, 2, 3, 4, 5) ");
+        int shipToPlace = sc.nextInt();
+        boolean validAnswer = shipToPlace == 1 || shipToPlace == 2 || shipToPlace == 3 || shipToPlace == 4 || shipToPlace == 5;
+        while (!validAnswer) {
+            System.out.println("Please enter any of " + board.shipsToPlace.toString());
+            shipToPlace = sc.nextInt();
+            validAnswer = shipToPlace == 1 || shipToPlace == 2 || shipToPlace == 3 || shipToPlace == 4 || shipToPlace == 5;
+        }
+
+        for (int j = 0; j < board.length(); j++) {
+            for (int k = 0; k < board.length(); k++) {
+                System.out.print(board.grid()[j][k] + "\t");
+            }
+            System.out.println();
+        }
+
+        System.out.println("Do you want to place your " + board.shipsToPlace.get(shipToPlace - 1) + " [v]ertically or [h]orizontally? ");
+        String orientation = sc.next();
+        orientation = orientation.toUpperCase();
+        validAnswer = orientation.equals("V") || orientation.equals("H");
+        while (!validAnswer) {
+            System.out.println("Please select either v or h. ");
+            orientation = sc.next();
             orientation = orientation.toUpperCase();
             validAnswer = orientation.equals("V") || orientation.equals("H");
-            while(!validAnswer){
-                System.out.println("Please select either v or h. ");
-                orientation = sc.next();
-                orientation = orientation.toUpperCase();
-                validAnswer = orientation.equals("V") || orientation.equals("H");
-            }
-            if (orientation.equals("V")){
-                System.out.println("Please enter the top most y coordinate for this ship. ");
-                int y = sc.nextInt();
-                while (y < 1 || y > (10 - shipToPlace.length())){
-                    System.out.println("Please enter a valid y coordinate for your " + shipToPlace.toString());
-                    y = sc.nextInt();
-                }
-                System.out.println("Please enter the x coordinate for this ship. ");
-                int x = sc.nextInt();
-                while(x < 1 || x > 10){
-                    System.out.println("Please enter a valid x coordinate for your " + shipToPlace.toString());
-                    x = sc.nextInt();
-                }
+        }
+
+        if (orientation.equals("V")) {
+            System.out.println("Please enter the top most y coordinate for this ship. ");
+            int y = sc.nextInt();
+
+            while (y < 1 || y > (10 - board.shipsToPlace.get(shipToPlace - 1).getLength())) {
+                System.out.println("Please enter a valid y coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                System.out.println(board.shipsToPlace.get(shipToPlace - 1).getLength());
+                y = sc.nextInt();
             }
 
+            System.out.println("Please enter the x coordinate for this ship. ");
+            int x = sc.nextInt();
 
+            while (x < 1 || x > 10) {
+                System.out.println("Please enter a valid x coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                x = sc.nextInt();
+            }
 
+            board.addShipVertical(x, y, board.shipsToPlace.get(shipToPlace - 1));
+        } else {
+            System.out.println("Please enter the left most x coordinate for this ship. ");
+            int x = sc.nextInt();
 
+            while (x < 1 || x > (10 - board.shipsToPlace.get(shipToPlace - 1).getLength())) {
+                System.out.println("Please enter a valid x coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                x = sc.nextInt();
+            }
 
+            System.out.println("Please enter the y coordinate for this ship. ");
+            int y = sc.nextInt();
 
+            while (y < 1 || y > 10) {
+                System.out.println("Please enter a valid y coordinate for your " + board.shipsToPlace.get(shipToPlace - 1));
+                y = sc.nextInt();
+            }
 
+            board.addShipHorizontal(x, y, board.shipsToPlace.get(shipToPlace - 1));
+        }
+
+        for (int j = 0; j < board.length(); j++) {
+            for (int k = 0; k < board.length(); k++) {
+                System.out.print(board.grid()[j][k] + "\t");
+            }
+            System.out.println();
+        }
+        board.removeShip(board.shipsToPlace.get(shipToPlace - 1));
     }
+
+    return board;
+    }
+
 }

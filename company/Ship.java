@@ -23,7 +23,7 @@ public abstract class Ship {
 
     //////////////////////////Methods////////////////////////////
 
-    private int getLength(){
+    public int getLength(){
         return length;
     }
 

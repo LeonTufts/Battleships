@@ -37,6 +37,24 @@ public class Board {
         return board;
     }
 
+    public void addShipVertical(int x, int y, Ship s){
+        for(int i = 0; i < s.getLength(); i++) {
+            board[y-1+i][x-1] = 1;
+        }
+    }
+
+    public void addShipHorizontal(int x, int y, Ship s){
+        for(int i = 0; i < s.getLength(); i++) {
+            board[y-1][x-1+i] = 1;
+        }
+    }
+
+
+    public void removeShip(Ship s){
+        shipsToPlace.remove(s);
+    }
+
+
 
 
 
